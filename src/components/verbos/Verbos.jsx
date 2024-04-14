@@ -17,7 +17,7 @@ export default function Verbos() {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await listarItens(categoria, id)
+            const data = await listarItens(categoria, id, "essen")
             setVerbos(data)
         }
 
@@ -38,18 +38,31 @@ export default function Verbos() {
                             idioma={id}
                             campos={[
                                 {
-                                    name: "infinitivoPt",
+                                    name: "verboId",
                                     type: "text",
                                     maxLength: 100,
                                     required: true,
-                                    label: "Infinitivo (Português)"
+                                    label: "Infinitivo (Idioma)",
+                                }, {
+                                    name: "verboPt",
+                                    type: "text",
+                                    maxLength: 100,
+                                    required: true,
+                                    label: "Infinitivo (Português)",
+                                }, {
+                                    name: "tempoVerbal",
+                                    type: "text",
+                                    maxLength: 100,
+                                    required: true,
+                                    label: "Tempo Verbal",
                                 },
                                 {
-                                    name: "infinitivoId",
+                                    dinamico: true,
+                                    name: "pessoasVerbais",
                                     type: "text",
                                     maxLength: 100,
-                                    required: true,
-                                    label: "Infinitivo (Idioma)"
+                                    required: false,
+                                    noLabel: true,
                                 },
                             ]}
                             textoBotao="Adicionar"

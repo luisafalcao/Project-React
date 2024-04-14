@@ -10,17 +10,12 @@ export default function Box({ titulo, categoria, children, classes }) {
         <div className={`box ${classes}`}>
 
             <div className="box-header" {...getToggleProps()}>
-                {categoria === "verbos" ?
-                    <>
-                        <h3>{titulo[0]}</h3>
-                        <h3 className="italico">{titulo[1]}</h3>
-                    </>
-                    :
-                    classes === "mini" ?
-                        <h4>{titulo[0]}</h4> :
-                        <h3>{titulo[0]}</h3>
+                {classes === "mini" ?
+                    <h4>{titulo[0]}</h4> :
+                    <h3>{titulo[0]}</h3>
 
                 }
+                <h3 className="italico">{titulo[1]}</h3>
                 {isExpanded ?
                     <FontAwesomeIcon className="collapse-icon" icon="fa-solid fa-chevron-up" /> :
                     <FontAwesomeIcon className="collapse-icon" icon="fa-solid fa-chevron-down" />

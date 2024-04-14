@@ -3,7 +3,7 @@ import { useCollapse } from "react-collapsed";
 import Form from "../components/Form";
 import ListaIdiomas from "../components/ListaIdiomas";
 import Card from "../components/Card";
-import { listarIdiomas } from "../infra/basededados";
+import { listarItens } from "../infra/basededados";
 import logo from '../assets/idiomas_inverso.svg'
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await listarIdiomas(categoria);
+            const data = await listarItens(categoria);
             setIdiomas(data);
         }
 

@@ -3,33 +3,33 @@ import { useState } from "react";
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useForm, useFieldArray } from "react-hook-form";
-import { inserirIdioma, inserirItem } from "../infra/basededados";
+import { inserirItem } from "../infra/basededados";
 import "./Form.css"
 
 export default function Form({ campos, idioma, textoBotao, categoria, textoSucesso, setDatabaseId, classes }) {
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm({
         defaultValues: {
             pronomes: [{ pronome: "" }],
-            pessoasVerbais: { pessoasVerbais: "" }
+            pessoasVerbais: [{ pessoaVerbal: "" }]
         }
     });
 
-    const { fields, append, remove } = useFieldArray(
-        {
-            name: 'pronomes',
-            control
-        },
-        {
-            name: 'pessoasVerbais',
-            control
-        }
-    )
+    const { fields: pronomesFields, append: appendPronome, remove: removePronome } = useFieldArray({
+        name: 'pronomes',
+        control
+    });
+
+    const { fields: pessoasVerbaisFields, append: appendPessoasVerbais, remove: removePessoasVerbais } = useFieldArray({
+        name: 'pessoasVerbais',
+        control
+    });
 
     async function enviarDados(dados) {
+        console.log("clicado")
         let id
         if (categoria === "idiomas") {
             const idiomaNome = dados.idioma.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-            id = await inserirIdioma(dados, idiomaNome);
+            id = await inserirItem(idiomaNome, categoria, dados);
         } else {
             let docName
             let colName
@@ -39,14 +39,8 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
             } else if (categoria === "gramatica") {
                 docName = dados.regra.toLowerCase();
             } else if (categoria === "verbos") {
-                docName = dados.infinitivoId.toLowerCase()
-            } else if (categoria === "conjugacoes") {
-                docName = dados.tempoVerbal.toLowerCase()
-                colName = dados.verboId.toLowerCase()
-                console.log("docName: ", docName)
-                console.log("colName: ", colName)
-                console.log("dados: ", dados)
-                console.log("dados.pessoasVerbais: ", dados.pessoasVerbais)
+                docName = dados.verboId.toLowerCase()
+                colName = dados.tempoVerbal.toLowerCase()
             } else if (categoria === "pronomes") {
                 docName = dados.pronomeTipo.toLowerCase()
             }
@@ -107,25 +101,49 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
                         const { dinamico, name, type, maxLength, required, label, options, noLabel } = campo
 
                         if (dinamico) {
-                            return (
-                                <div key={index} className="form-group">
-                                    {
-                                        fields.map((field, index) => {
-                                            return (
-                                                <div key={field.id} className="botao-dinamico-wrapper">
-                                                    <input type="text" placeholder={label} {...register(`${name}.${index}.${name}`, { required: required, maxLength: maxLength })} />
-                                                    {
-                                                        index > 0 && (
-                                                            <button type="button" className="botao-dinamico" onClick={() => remove(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
-                                                        )
-                                                    }
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <button type="button" className="botao-add" onClick={() => append({ name: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button>
-                                </div>
-                            )
+                            if (categoria === "pronomes") {
+                                return (
+                                    <div key={index} className="form-group">
+                                        {
+                                            pronomesFields.map((field, index) => {
+                                                console.log(field)
+                                                return (
+                                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                                        <input type="text" placeholder={label} {...register(`pronomes.${index}.pronome`, { required: required, maxLength: maxLength })} />
+                                                        {
+                                                            index > 0 && (
+                                                                <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                                            )
+                                                        }
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        <button type="button" className="botao-add" onClick={() => appendPronome({ pronome: "" })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button>
+                                    </div>
+                                )
+                            }
+                            else if (categoria === "verbos") {
+                                return (
+                                    <div key={index} className="form-group">
+                                        {
+                                            pessoasVerbaisFields.map((field, index) => {
+                                                return (
+                                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                                        <input type="text" placeholder={label} {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required, maxLength: maxLength })} />
+                                                        {
+                                                            index > 0 && (
+                                                                <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                                            )
+                                                        }
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        <button type="button" className="botao-add" onClick={() => appendPessoasVerbais({ pessoaVerbal: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button>
+                                    </div>
+                                )
+                            }
                         } else if (type === "textarea") {
                             return (
                                 <div key={index} className="form-group">

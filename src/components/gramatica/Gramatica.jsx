@@ -52,6 +52,7 @@ export default function Gramatica() {
                             <Form
                                 setDatabaseId={setPronomesId}
                                 categoria="pronomes"
+                                idioma={id}
                                 campos={[
                                     {
                                         name: "pronomeTipo",
