@@ -1,0 +1,52 @@
+.card {
+  border: 2px solid var(--text-color);
+  border-radius: 10px;
+  padding: 1rem;
+  min-width: 250px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card.row {
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.card.half > * {
+  flex: 1;
+}
+
+.card-titulo:empty {
+  margin: 0;
+}
+
+.card-botao {
+  background-color: transparent;
+  height: 100%;
+  color: var(--accent-color);
+  font-weight: var(--font-weight-medium);
+  font-size: 1.5rem;
+}
+
+.card-botao:hover {
+  border-color: transparent;
+  background-color: var(--accent-color);
+  color: var(--background-color);
+
+  transition: all 0.5s ease-in-out;
+}
+
+.card.container > .coluna {
+  gap: 1rem;
+}
+
+.card h4 {
+  margin-bottom: 0;
+}
+
+.card ul {
+  margin-top: 0;
+}

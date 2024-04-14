@@ -1,0 +1,22 @@
+.barra-login {
+  display: flex;
+  justify-content: center;
+}
+
+.login,
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.logout {
+  justify-content: flex-start;
+}
+
+.logout > p {
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-color);
+}

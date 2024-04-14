@@ -1,0 +1,14 @@
+.coluna:not(:has(.box)) .rdt_Table .rdt_TableCell[data-column-id="1"] {
+  color: var(--text-color);
+  font-size: 1.17em;
+  font-family: var(--title-font-family);
+  font-weight: bold;
+}
+
+.rdt_TableCol_Sortable span {
+  scale: 0.7;
+}
+
+.rdt_Pagination svg {
+  top: 10px;
+}

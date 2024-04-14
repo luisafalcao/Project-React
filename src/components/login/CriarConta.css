@@ -1,0 +1,14 @@
+.criar-conta .container.flex {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  align-content: center;
+  width: fit-content;
+  margin: auto;
+}
+
+.criar-conta .container.flex > form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

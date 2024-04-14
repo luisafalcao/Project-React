@@ -1,0 +1,72 @@
+.box {
+  border-top: 2px solid var(--text-color);
+  border-bottom: 2px solid var(--text-color);
+  height: fit-content;
+  overflow-x: clip;
+}
+
+.box.transparente {
+  border: transparent;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .wrapper {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.box.mini {
+  padding: 0.5rem;
+}
+
+.box.mini .box-header {
+  padding: 0.5rem;
+}
+
+.box.mini .wrapper {
+  padding: 0.5rem;
+}
+
+.wrapper:has(.rdt_Table) {
+  padding: 0;
+}
+
+.classe-gramatical,
+.box-header {
+  width: 100%;
+  padding: 1rem;
+}
+
+.box-header > h3,
+.box-header > h4,
+.box-header > p {
+  margin: 0;
+}
+
+.box-header > h3:nth-child(2) {
+  margin-left: auto;
+}
+
+.box-header > .italico {
+  font-style: italic;
+}
+
+.conjugacao {
+  display: flex;
+  gap: 2rem;
+  overflow-x: scroll;
+}
+
+.collapse-icon {
+  margin-left: 1rem;
+  align-self: center;
+}
