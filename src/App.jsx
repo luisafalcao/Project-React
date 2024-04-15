@@ -31,7 +31,6 @@ function App() {
               <Route path="gramatica" element={<Gramatica />} />
               <Route path="vocabulario" element={<Vocabulario />} />
               <Route path="verbos" element={<Verbos />} />
-              {/* <Route path="conjugacoes" element={<Conjugacoes />} /> */}
             </Route>
           </Route>
         </Routes>
