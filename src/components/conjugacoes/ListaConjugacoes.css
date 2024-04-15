@@ -12,3 +12,11 @@
 .rdt_Pagination svg {
   top: 10px;
 }
+
+.rdt_TableRow {
+  background-color: transparent !important;
+}
+
+.rdt_TableCell {
+  text-align: center;
+}

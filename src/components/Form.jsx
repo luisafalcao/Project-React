@@ -10,7 +10,7 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm({
         defaultValues: {
             pronomes: [{ pronome: "" }],
-            pessoasVerbais: [{ pessoaVerbal: "" }]
+            pessoasVerbais: [{}]
         }
     });
 
@@ -109,7 +109,7 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
                                                 console.log(field)
                                                 return (
                                                     <div key={field.id} className="botao-dinamico-wrapper">
-                                                        <input type="text" placeholder={label} {...register(`pronomes.${index}.pronome`, { required: required, maxLength: maxLength })} />
+                                                        <input type="text" placeholder={label} {...register(`pronomes.${index}.pronome`, { required: required })} />
                                                         {
                                                             index > 0 && (
                                                                 <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
@@ -130,7 +130,7 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
                                             pessoasVerbaisFields.map((field, index) => {
                                                 return (
                                                     <div key={field.id} className="botao-dinamico-wrapper">
-                                                        <input type="text" placeholder={label} {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required, maxLength: maxLength })} />
+                                                        <input type="text" placeholder={label} {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required })} />
                                                         {
                                                             index > 0 && (
                                                                 <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>

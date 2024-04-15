@@ -60,7 +60,6 @@ export default function Verbos() {
                                     dinamico: true,
                                     name: "pessoasVerbais",
                                     type: "text",
-                                    maxLength: 100,
                                     required: false,
                                     noLabel: true,
                                 },

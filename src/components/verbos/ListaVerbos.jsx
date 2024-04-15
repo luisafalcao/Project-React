@@ -8,7 +8,7 @@ export default function ListaVerbos({ conteudo, categoria }) {
         const { verboId, verboPt, id, ...rest } = verbo;
         return (
             <Box key={index} titulo={[verboId, verboPt]} categoria={categoria}>
-                <ListaConjugacoes conteudo={rest} titulo={verboId} />
+                <ListaConjugacoes conteudo={rest} />
             </Box>
         )
     }))

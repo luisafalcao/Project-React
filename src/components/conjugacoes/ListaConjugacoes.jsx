@@ -1,59 +1,80 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
 import { ConjugContext } from "../../AppContext"
 import DataTable from "react-data-table-component"
 import "./ListaConjugacoes.css"
 import NoDataComponent from "../NoDataComponent";
 
-export default function ListaConjugacoes({ conteudo, titulo }) {
-    let { id } = useParams();
+export default function ListaConjugacoes({ conteudo }) {
     const { pronomesConjug } = useContext(ConjugContext);
 
     let tempoVerbal;
-    let conjugacoes;
+    let pessoasVerbais;
 
     for (var tempo in conteudo) {
         tempoVerbal = conteudo[tempo].tempoVerbal
-        conjugacoes = conteudo[tempo].pessoasVerbais
-
+        pessoasVerbais = conteudo[tempo].pessoasVerbais
     }
 
-    conjugacoes = {
+    let conjugacoes = {
         tempo: { tempoVerbal: tempoVerbal },
-        ...conjugacoes,
+        ...pessoasVerbais,
     }
 
-    let dataArray = Object.values(conjugacoes)
+    let dataArray = Object.values(conjugacoes).reverse()
 
-    console.log(dataArray)
-    const [headerCol, ...rest] = dataArray
-    console.log(headerCol)
+    const [headerCol, ...restArray] = dataArray
 
     let pronomesArray = pronomesConjug.current
 
+    const outrasColunas = pronomesArray.map(pronome => (
+        {
+            name: Object.values(pronome)[0],
+            selector: row => row[Object.values(pronome)[0]]
+        }
+    ))
 
-    // let noBorder = {
-    //     fontSize: "1rem",
-    //     fontWeight: "400",
-    //     backgroundColor: "transparent",
-    //     padding: "1rem",
-    // }
+    const colunaPrincipal = [
+        {
+            name: "Tempo Verbal",
+            selector: row => row.tempoVerbal,
+        }
+    ]
 
-    // let blueBorder = {
-    //     fontSize: "1rem",
-    //     fontWeight: "400",
-    //     backgroundColor: "transparent",
-    //     padding: "1rem",
-    //     borderBottom: "2px solid #002ec9",
-    //     borderTop: "2px solid #002ec9",
-    // }
+    const colunas = colunaPrincipal.concat(outrasColunas)
+
+    let dataConjugacoes = {
+        tempoVerbal: headerCol.tempoVerbal,
+        center: true,
+    };
+
+    for (let i = 0; i < pronomesArray.length; i++) {
+        const pronoun = pronomesArray[i].pronome;
+        const verbForm = restArray[i]?.pessoaVerbal;
+
+        dataConjugacoes = {
+            ...dataConjugacoes,
+            [pronoun]: verbForm
+        }
+    }
+
+    let data = [dataConjugacoes]
 
     let customStyles = {
         table: {
             style: {
                 backgroundColor: "transparent",
+            }
+        },
+        row: {
+            style: {
+                backgroundColor: "transparent",
+            }
+        },
+        cell: {
+            style: {
+                justifyContent: "center"
             }
         },
         headCells: {
@@ -98,89 +119,25 @@ export default function ListaConjugacoes({ conteudo, titulo }) {
 
     };
 
-    // let data = filtrarConjugacoes ? dadosFiltrados : dados
-
-    // let dataHeader = pronomesConjug.current
-
-    // let headers = dataHeader.map((item, index) => {
-    //     return {
-    //         name: item.pronome,
-    //         selector: row => row[`pessoasVerbais${index + 1}`],
-    //     }
-    // })
-
-    // const data = [
-    //     {
-    //         tempoVerbal: "presente",
-    //         pronome: "eu",
-    //         pronome2: "tu"
-    //     },
-    //     {
-    //         tempoVerbal: "passado",
-    //         pronome: "ele",
-    //         pronome2: "ela"
-    //     },
-    //     {
-    //         tempoVerbal: "futuro",
-    //         pronome: "ele",
-    //         pronome2: "ela"
-    //     },
-    // ]
-
-    const colunaPrincipal = [{
-        name: "Tempo Verbal",
-        selector: row => row.tempoVerbal,
-        sortable: true,
-        // center: true,
-    }]
-
-
-    // const customColumns = pronomesArray.map((header, index) => ({
-    //     name: header.pronome,
-    //     selector: "", // No data field associated with the custom header
-    //     cell: row => <div>{row[`customData${index + 1}`]}</div>, // Render function for the custom header
-    // }));
-
-
-    // const outrasColunas = pronomesArray.map(item => {
-    //     let conjugacao = item.pronome
-    //     return {
-    //         name: conjugacao,
-    //         selector: "",
-    //         sortable: true,
-    //         // center: true
-    //     }
-    // });
-
-
-    // const data = conteudoArray.flatMap(item => {
-    //     const tempoVerbal = item.tempoVerbal;
-    //     const pronomeProperties = Object.keys(item.pessoasVerbais).map((key, index) => ({ [`pronome${index + 1}`]: item.pessoasVerbais[key].pessoa }));
-    //     const mergedPronomes = Object.assign({}, ...pronomeProperties);
-
-    //     return { tempoVerbal, ...mergedPronomes };
-    // });
-
-    // const colunas = colunaPrincipal.concat(outrasColunas)
 
     function handleRowSelect(selectedRows) {
         // console.log(selectedRows[0]?.id)
     }
 
-    // return (
-    //     <DataTable
-    //         columns={colunas}
-    //         data={data}
-    //         responsive
-    //         theme="default"
-    //         customStyles={customStyles}
-    //         selectableRows
-    //         selectableRowsHighlight
-    //         selectableRowsSingle
-    //         onSelectedRowsChange={handleRowSelect}
-    //         pagination
-    //         paginationComponentOptions={paginationComponentOptions}
-    //     // noDataComponent={<NoDataComponent verbo={verbo} frase="Nenhum tempo verbal a exibir" filtrarConjugacoes={filtrarConjugacoes} />}
-    //     />
-    // )
+    return (
+        <DataTable
+            columns={colunas}
+            data={data}
+            responsive
+            theme="default"
+            customStyles={customStyles}
+            selectableRows
+            selectableRowsHighlight
+            selectableRowsSingle
+            onSelectedRowsChange={handleRowSelect}
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+            noDataComponent={<NoDataComponent />}
+        />
+    )
 }
