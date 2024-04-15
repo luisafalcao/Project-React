@@ -142,3 +142,44 @@ h2.center {
 .card:has(.logo) > p {
   margin-bottom: 0;
 }
+
+.botao-dinamico-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.botao-dinamico:not(.box) {
+  background-color: transparent;
+  border: 1.5px solid var(--text-color);
+  color: var(--accent-color);
+  border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botao-dinamico.box {
+  background-color: transparent;
+  border: none;
+  color: var(--accent-color);
+  position: relative;
+  width: 50px;
+}
+
+.botao-dinamico.box::after {
+  position: absolute;
+  inset: 0;
+}
+
+.botao-dinamico.box:hover::after {
+  font-size: 0.8rem;
+  content: "Remover";
+}
+
+.botao-dinamico.box:focus {
+  outline: transparent;
+}

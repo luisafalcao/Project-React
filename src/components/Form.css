@@ -23,22 +23,3 @@ small {
 .form > form.inverso input {
   color: white;
 }
-
-.botao-dinamico-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.botao-dinamico {
-  background-color: transparent;
-  border: 1.5px solid var(--text-color);
-  color: var(--accent-color);
-  border-radius: 100%;
-  width: 2rem;
-  height: 2rem;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

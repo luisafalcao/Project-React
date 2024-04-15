@@ -14,7 +14,7 @@ export default function Idioma() {
 
     const [pronomes, setPronomes] = useState([]);
     const [pronomesId, setPronomesId] = useState("");
-    const pronomesConjug = useRef([{ pronome: "1ª pessoa do singular" }, { pronome: "2ª pessoa do singular" }, { pronome: "3ª pessoa do singular" }, { pronome: "1ª pessoa do plural" }, { pronome: "2ª pessoa do plural" }, { pronome: "3ª pessoa do plural" }]);
+    const pronomesConjugRef = useRef([{ pronome: "1ª pessoa do singular" }, { pronome: "2ª pessoa do singular" }, { pronome: "3ª pessoa do singular" }, { pronome: "1ª pessoa do plural" }, { pronome: "2ª pessoa do plural" }, { pronome: "3ª pessoa do plural" }]);
 
     useEffect(() => {
         async function fetchData() {
@@ -24,7 +24,7 @@ export default function Idioma() {
             })[0].pronomes
 
             if (pronomesPessoais) {
-                pronomesConjug.current = pronomesPessoais
+                pronomesConjugRef.current = pronomesPessoais
             }
 
         }
@@ -38,7 +38,7 @@ export default function Idioma() {
                 <Navbar idiomaSelecionado={id} />
             </div>
 
-            <ConjugContext.Provider value={{ conjugacoes, setConjugacoes, conjugacoesId, setConjugacoesId, pronomesConjug }}>
+            <ConjugContext.Provider value={{ conjugacoes, setConjugacoes, conjugacoesId, setConjugacoesId, pronomesConjugRef }}>
                 <PronomesContext.Provider value={{ pronomes, setPronomes, pronomesId, setPronomesId }}>
                     <Outlet />
                 </PronomesContext.Provider>

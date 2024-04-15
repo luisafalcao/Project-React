@@ -7,6 +7,7 @@ import { inserirItem } from "../infra/basededados";
 import "./Form.css"
 
 export default function Form({ campos, idioma, textoBotao, categoria, textoSucesso, setDatabaseId, classes }) {
+
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm({
         defaultValues: {
             pronomes: [{ pronome: "" }],
@@ -25,7 +26,6 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
     });
 
     async function enviarDados(dados) {
-        console.log("clicado")
         let id
         if (categoria === "idiomas") {
             const idiomaNome = dados.idioma.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');

@@ -1,4 +1,4 @@
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 // inserir idioma (documento)
@@ -40,6 +40,10 @@ export async function listarItens(colecao, idioma) {
     return retorno
 }
 
+// deletar itens
+export async function deletarItem() {
+    await deleteDoc(doc(db, "idiomas", "DC"));
+}
 
 // export async function listarIdiomas(colecao) {
 //     let retorno;

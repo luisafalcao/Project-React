@@ -7,7 +7,7 @@ import "./ListaConjugacoes.css"
 import NoDataComponent from "../NoDataComponent";
 
 export default function ListaConjugacoes({ conteudo }) {
-    const { pronomesConjug } = useContext(ConjugContext);
+    const { pronomesConjugRef } = useContext(ConjugContext);
 
     let tempoVerbal;
     let pessoasVerbais;
@@ -26,7 +26,7 @@ export default function ListaConjugacoes({ conteudo }) {
 
     const [headerCol, ...restArray] = dataArray
 
-    let pronomesArray = pronomesConjug.current
+    let pronomesArray = pronomesConjugRef.current
 
     const outrasColunas = pronomesArray.map(pronome => (
         {
