@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
+import { ConjugContext } from "../../AppContext"
+
 import { listarItens } from "../../infra/basededados"
 import "./Vocabulario.css"
 
@@ -10,7 +12,7 @@ import Form from "../Form"
 
 export default function Vocabulario() {
     let { id } = useParams();
-
+    const { idiomaAtual } = useContext(ConjugContext);
     const categoria = "vocabulario";
 
     const [vocabulario, setVocabulario] = useState([]);
@@ -39,18 +41,18 @@ export default function Vocabulario() {
                             idioma={id}
                             campos={[
                                 {
+                                    name: "palavraId",
+                                    type: "text",
+                                    maxLength: 50,
+                                    required: true,
+                                    label: `Palavra (${idiomaAtual})`
+                                },
+                                {
                                     name: "palavraPt",
                                     type: "text",
                                     maxLength: 50,
                                     required: true,
                                     label: "Palavra (Português)"
-                                },
-                                {
-                                    name: "palavraId",
-                                    type: "text",
-                                    maxLength: 50,
-                                    required: true,
-                                    label: "Palavra (Idioma)"
                                 },
                                 {
                                     name: "genero",

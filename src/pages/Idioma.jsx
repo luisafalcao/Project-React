@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./Layout.css"
 import Navbar from "../components/Navbar";
@@ -8,6 +8,7 @@ import { ConjugContext, PronomesContext } from "../AppContext";
 
 export default function Idioma() {
     const { id } = useParams();
+    const { idiomaAtual } = useOutletContext();
 
     const [conjugacoes, setConjugacoes] = useState([]);
     const [conjugacoesId, setConjugacoesId] = useState("");
@@ -36,9 +37,10 @@ export default function Idioma() {
         <>
             <div className="nav-wrapper">
                 <Navbar idiomaSelecionado={id} />
+                <p>{idiomaAtual}</p>
             </div>
 
-            <ConjugContext.Provider value={{ conjugacoes, setConjugacoes, conjugacoesId, setConjugacoesId, pronomesConjugRef }}>
+            <ConjugContext.Provider value={{ conjugacoes, setConjugacoes, conjugacoesId, setConjugacoesId, pronomesConjugRef, idiomaAtual }}>
                 <PronomesContext.Provider value={{ pronomes, setPronomes, pronomesId, setPronomesId }}>
                     <Outlet />
                 </PronomesContext.Provider>

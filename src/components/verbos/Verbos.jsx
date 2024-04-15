@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { listarItens } from "../../infra/basededados";
+import { ConjugContext } from "../../AppContext"
 
 import NovoConteudo from "../NovoConteudo";
 import Form from "../Form";
@@ -9,6 +10,7 @@ import ListaVerbos from "./ListaVerbos";
 
 export default function Verbos() {
     let { id } = useParams();
+    const { idiomaAtual } = useContext(ConjugContext);
 
     const categoria = "verbos"
 
@@ -39,7 +41,7 @@ export default function Verbos() {
                                 type: "text",
                                 maxLength: 100,
                                 required: true,
-                                label: "Infinitivo (Idioma)",
+                                label: `Infinitivo (${idiomaAtual})`,
                             }, {
                                 name: "verboPt",
                                 type: "text",

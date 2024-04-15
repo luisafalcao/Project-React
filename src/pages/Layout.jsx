@@ -7,6 +7,7 @@ import logo from '../assets/idiomas.svg'
 
 export default function Layout() {
     const [usuario, updateUsuario] = useImmer({ id: "", email: "", senha: "" });
+    const [idiomaAtual, setIdiomaAtual] = useImmer("Idioma Atual");
 
     return (
         <>
@@ -22,7 +23,7 @@ export default function Layout() {
 
             <main>
                 {usuario.id ?
-                    <Outlet context={[usuario, updateUsuario]} /> :
+                    <Outlet context={{ usuario, updateUsuario, idiomaAtual, setIdiomaAtual }} /> :
                     <CriarConta usuario={usuario} updateUsuario={updateUsuario} />
                 }
             </main>

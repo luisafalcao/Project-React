@@ -11,7 +11,6 @@ import Idioma from './pages/Idioma';
 import Gramatica from './components/gramatica/Gramatica'
 import Vocabulario from './components/vocabulario/Vocabulario'
 import Verbos from './components/verbos/Verbos'
-// import Conjugacoes from './components/conjugacoes/Conjugacoes';
 
 library.add(faChevronDown, faChevronUp, faHouse, faPlus, faMinus)
 Modal.setAppElement('#root');

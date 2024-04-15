@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import { useCollapse } from "react-collapsed";
 import Form from "../components/Form";
 import ListaIdiomas from "../components/ListaIdiomas";
@@ -7,6 +8,7 @@ import { listarItens } from "../infra/basededados";
 import logo from '../assets/idiomas_inverso.svg'
 
 export default function Home() {
+    const { idiomaAtual, setIdiomaAtual } = useOutletContext();
     const { getCollapseProps, getToggleProps } = useCollapse()
     const categoria = "idiomas"
 
@@ -43,7 +45,7 @@ export default function Home() {
                         classes="inverso"
                     />
                 </Card>
-                <ListaIdiomas conteudo={idiomas} />
+                <ListaIdiomas conteudo={idiomas} setIdiomaAtual={setIdiomaAtual} />
             </div>
         </div>
 
