@@ -1,23 +1,21 @@
 import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
-
-// inserir idioma (documento)
-// export async function inserirIdioma(dados, idioma) {
-//     const docRef = await setDoc(doc(db, "idiomas", idioma), dados)
-//     return docRef;
-// }
+import { v4 as uuidv4 } from "uuid";
 
 // inserir documentos dentro das coleções (gramática, vocabulário, verbos, pronomes, conjugações) / inserir documentos com subcoleções (verbo + conjugação)
 export async function inserirItem(idioma, colecao, dados, docName, colName) { //idioma = frances; colecao = vocabulario; dados = inputs; docName = regra/palavraId/infinitivoId/pronomeTipo/tempoVerbal
     console.log("idioma: ", idioma)
     console.log("colecao: ", colecao)
     console.log("docName: ", docName)
+    console.log("colName: ", colName)
+    console.log({ ...dados, id: uuidv4() })
     const docRef =
         colecao === "idiomas" ?
-            await setDoc(doc(db, "idiomas", idioma), dados) : //inserir idioma
+            await setDoc(doc(db, "idiomas", idioma), { ...dados, id: uuidv4() }) : //inserir idioma
             colecao === "verbos" ?
-                await setDoc(doc(db, "idiomas", idioma, colecao, docName), { [colName]: dados, verboId: dados.verboId, verboPt: dados.verboPt }, { merge: true }) : //inserir verbo
-                await setDoc(doc(db, "idiomas", idioma, colecao, docName), dados); //inserir outros
+                await setDoc(doc(db, "idiomas", idioma, colecao, docName), { [colName]: { ...dados, id: uuidv4() } }, { merge: true }) : //inserir verbo
+                // await setDoc(doc(db, "idiomas", idioma, colecao, docName), { [colName]: { ...dados, id: uuidv4() }, verboId: dados.verboId, verboPt: dados.verboPt }, { merge: true }) : //inserir verbo
+                await setDoc(doc(db, "idiomas", idioma, colecao, docName), { ...dados, id: uuidv4() }); //inserir outros
     return docRef;
 }
 
@@ -37,6 +35,7 @@ export async function listarItens(colecao, idioma) {
             retorno = QuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         })
 
+    console.log(retorno)
     return retorno
 }
 

@@ -8,14 +8,10 @@ import NoDataComponent from "../NoDataComponent";
 
 export default function ListaConjugacoes({ conteudo }) {
     const { pronomesConjugRef } = useContext(ConjugContext);
+    const { tempoVerbal, pessoasVerbais } = conteudo
+    console.log(tempoVerbal)
+    console.log(pessoasVerbais)
 
-    let tempoVerbal;
-    let pessoasVerbais;
-
-    for (var tempo in conteudo) {
-        tempoVerbal = conteudo[tempo].tempoVerbal
-        pessoasVerbais = conteudo[tempo].pessoasVerbais
-    }
 
     let conjugacoes = {
         tempo: { tempoVerbal: tempoVerbal },
@@ -42,6 +38,7 @@ export default function ListaConjugacoes({ conteudo }) {
         }
     ]
 
+    console.log(tempoVerbal)
     const colunas = colunaPrincipal.concat(outrasColunas)
 
     let dataConjugacoes = {
@@ -49,9 +46,12 @@ export default function ListaConjugacoes({ conteudo }) {
         center: true,
     };
 
+    console.log(conteudo)
+
     for (let i = 0; i < pronomesArray.length; i++) {
         const pronoun = pronomesArray[i].pronome;
         const verbForm = restArray[i]?.pessoaVerbal;
+        console.log(verbForm)
 
         dataConjugacoes = {
             ...dataConjugacoes,
@@ -121,7 +121,7 @@ export default function ListaConjugacoes({ conteudo }) {
 
 
     function handleRowSelect(selectedRows) {
-        // console.log(selectedRows[0]?.id)
+        console.log(selectedRows.selectedRows[0]?.id)
     }
 
     return (

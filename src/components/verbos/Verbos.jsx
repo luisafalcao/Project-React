@@ -16,10 +16,11 @@ export default function Verbos() {
 
     const [verbos, setVerbos] = useState([]);
     const [verbosId, setVerbosId] = useState("");
+    const [idEmEdicao, setIdEmEdicao] = useState("")
 
     useEffect(() => {
         async function fetchData() {
-            const data = await listarItens(categoria, id, "essen")
+            const data = await listarItens(categoria, id)
             setVerbos(data)
         }
 
@@ -29,7 +30,7 @@ export default function Verbos() {
     return (
         <>
             <div className="container">
-                <ListaVerbos conteudo={verbos} categoria={categoria} />
+                <ListaVerbos conteudo={verbos} categoria={categoria} idEmEdicao={idEmEdicao} setIdEmEdicao={setIdEmEdicao} />
                 <NovoConteudo label="Verbo" margin="auto">
                     <Form
                         setDatabaseId={setVerbosId}

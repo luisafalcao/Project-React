@@ -7,23 +7,9 @@ import { inserirItem } from "../infra/basededados";
 import "./Form.css"
 
 export default function Form({ campos, idioma, textoBotao, categoria, textoSucesso, setDatabaseId, classes }) {
-
-    const { register, handleSubmit, formState: { errors }, reset, control } = useForm({
-        defaultValues: {
-            pronomes: [{ pronome: "" }],
-            pessoasVerbais: [{}]
-        }
-    });
-
-    const { fields: pronomesFields, append: appendPronome, remove: removePronome } = useFieldArray({
-        name: 'pronomes',
-        control
-    });
-
-    const { fields: pessoasVerbaisFields, append: appendPessoasVerbais, remove: removePessoasVerbais } = useFieldArray({
-        name: 'pessoasVerbais',
-        control
-    });
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm();
+    const { fields: pronomesFields, append: appendPronome, remove: removePronome } = useFieldArray({ name: 'pronomes', control });
+    const { fields: pessoasVerbaisFields, append: appendPessoasVerbais, remove: removePessoasVerbais } = useFieldArray({ name: 'pessoasVerbais', control });
 
     async function enviarDados(dados) {
         let id
@@ -45,6 +31,7 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
                 docName = dados.pronomeTipo.toLowerCase()
             }
 
+            console.log("idioma: ", idioma, "categoria: ", categoria, "dados: ", dados, "docName: ", docName, "colName: ", colName)
             id = await inserirItem(idioma, categoria, dados, docName, colName)
         }
 
@@ -63,9 +50,78 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
         setIsOpen(false);
     }
 
+    function renderInputsDinamicos(campo, index) {
+        const { dinamico, name, type, maxLength, required, label, options } = campo
+
+        if (dinamico) {
+            return (
+                <div key={index} className="form-group">
+                    {categoria === "pronomes" ? (
+                        <div className="form-group dinamico">
+                            <p className="label">{label}</p>
+                            {pronomesFields.map((field, index) => {
+                                return (
+                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                        <input type="text" {...register(`pronomes.${index}.pronome`, { required: required })} />
+                                        {index > 0 && (
+                                            <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                        )}
+                                    </div>
+                                )
+                            })}
+                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPronome({ pronome: "" })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
+                        </div>
+                    ) : (
+                        <div className="form-group dinamico">
+                            <p className="label">{label}</p>
+                            {pessoasVerbaisFields.map((field, index) => {
+                                return (
+                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                        <input type="text" {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required })} />
+                                        {index > 0 && (
+                                            <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                        )}
+                                    </div>
+                                )
+                            })}
+                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPessoasVerbais({ pessoaVerbal: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+        else if (type === "textarea") {
+            return (
+                <div key={index} className="form-group">
+                    <label htmlFor={name}>{label}</label>
+                    <textarea id={name} cols="30" rows="10" {...register(name, { required: required, maxLength: maxLength })}></textarea>
+                </div>
+            )
+        } else if (type === "select") {
+            return (
+                <div key={index} className="form-group">
+                    <label htmlFor={name}>{label}</label>
+                    <select id={name} {...register(name, { required: required, maxLength: maxLength })}>
+                        {options.map((option, index) => (
+                            <option key={index} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </div>
+            )
+        } else {
+            return (
+                <div key={index} className="form-group">
+                    <label htmlFor={name}>{label}{required && name != "idioma" && <span>*</span>}</label>
+                    <input id={name} className={`${required && 'required'}`} type={type} {...register(name, { required: required, maxLength: maxLength })} />
+                    {errors[name] && errors[name].type === "required" && (
+                        <small className="erro">campo obrigatório</small>
+                    )}
+                </div>
+            )
+        }
+    }
     return (
         <div className="form">
-
             <Modal
                 style={{
                     overlay: {
@@ -96,89 +152,15 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
             </Modal>
 
             <form onSubmit={handleSubmit(enviarDados)} className={`${classes ? classes : ""}`}>
+
                 {
-                    campos.map((campo, index) => {
-                        const { dinamico, name, type, maxLength, required, label, options, noLabel } = campo
-
-                        if (dinamico) {
-                            return (
-                                <div key={index} className="form-group">
-                                    {categoria === "pronomes" ? (
-                                        <div className="form-group dinamico">
-                                            <p className="label">{label}</p>
-                                            {pronomesFields.map((field, index) => {
-                                                return (
-                                                    <div key={field.id} className="botao-dinamico-wrapper">
-                                                        <input type="text" {...register(`pronomes.${index}.pronome`, { required: required })} />
-                                                        {index > 0 && (
-                                                            <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
-                                                        )}
-                                                    </div>
-                                                )
-                                            })}
-                                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPronome({ pronome: "" })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
-                                        </div>
-                                    ) : (
-                                        <div className="form-group dinamico">
-                                            <p className="label">{label}</p>
-                                            {pessoasVerbaisFields.map((field, index) => {
-                                                return (
-                                                    <div key={field.id} className="botao-dinamico-wrapper">
-                                                        <input type="text" {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required })} />
-                                                        {index > 0 && (
-                                                            <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
-                                                        )}
-                                                    </div>
-                                                )
-                                            })}
-                                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPessoasVerbais({ pessoaVerbal: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        }
-
-                        else if (type === "textarea") {
-                            return (
-                                <div key={index} className="form-group">
-                                    <label htmlFor={name}>{label}</label>
-                                    <textarea id={name} cols="30" rows="10" {...register(name, { required: required, maxLength: maxLength })}></textarea>
-                                </div>
-                            )
-                        } else if (type === "select") {
-                            return (
-                                <div key={index} className="form-group">
-                                    <label htmlFor={name}>{label}</label>
-                                    <select id={name} {...register(name, { required: required, maxLength: maxLength })}>
-                                        {options.map((option, index) => (
-                                            <option key={index} value={option}>{option}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            )
-                        } else if (noLabel) {
-                            return (
-                                <div key={index} className={`form-group ${categoria === "conjugacoes" && "flex"}`}>
-                                    <input placeholder={label} className={`${required && 'required'}`} type={type} {...register(name, { required: required, maxLength: maxLength })} />
-                                </div>
-                            )
-                        } else {
-                            return (
-                                <div key={index} className="form-group">
-                                    <label htmlFor={name}>{label}{required && name != "idioma" && <span>*</span>}</label>
-                                    <input id={name} className={`${required && 'required'}`} type={type} {...register(name, { required: required, maxLength: maxLength })} />
-                                    {errors[name] && errors[name].type === "required" && (
-                                        <small className="erro">campo obrigatório</small>
-                                    )}
-                                </div>
-                            )
-                        }
-
-
-
-                    })
-
+                    campos.map((campo, index) => (
+                        <div key={index}>
+                            {renderInputsDinamicos(campo, index)}
+                        </div>
+                    ))
                 }
+
                 <input type="submit" value={textoBotao} />
             </form>
 
