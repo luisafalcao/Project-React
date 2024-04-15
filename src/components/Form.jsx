@@ -104,39 +104,35 @@ export default function Form({ campos, idioma, textoBotao, categoria, textoSuces
                             return (
                                 <div key={index} className="form-group">
                                     {categoria === "pronomes" ? (
-                                        <>
-                                            <div className="form-group dinamico">
-                                                <label htmlFor={name}>{label}</label>
-                                                {pronomesFields.map((field, index) => {
-                                                    return (
-                                                        <div key={field.id} className="botao-dinamico-wrapper">
-                                                            <input type="text" {...register(`pronomes.${index}.pronome`, { required: required })} />
-                                                            {index > 0 && (
-                                                                <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
-                                                            )}
-                                                        </div>
-                                                    )
-                                                })}
-                                                <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPronome({ pronome: "" })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
-                                            </div>
-                                        </>
+                                        <div className="form-group dinamico">
+                                            <p className="label">{label}</p>
+                                            {pronomesFields.map((field, index) => {
+                                                return (
+                                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                                        <input type="text" {...register(`pronomes.${index}.pronome`, { required: required })} />
+                                                        {index > 0 && (
+                                                            <button type="button" className="botao-dinamico" onClick={() => removePronome(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                                        )}
+                                                    </div>
+                                                )
+                                            })}
+                                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPronome({ pronome: "" })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
+                                        </div>
                                     ) : (
-                                        <>
-                                            <div className="form-group dinamico">
-                                                <label htmlFor={name}>{label}</label>
-                                                {pessoasVerbaisFields.map((field, index) => {
-                                                    return (
-                                                        <div key={field.id} className="botao-dinamico-wrapper">
-                                                            <input type="text" {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required })} />
-                                                            {index > 0 && (
-                                                                <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
-                                                            )}
-                                                        </div>
-                                                    )
-                                                })}
-                                                <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPessoasVerbais({ pessoaVerbal: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
-                                            </div>
-                                        </>
+                                        <div className="form-group dinamico">
+                                            <p className="label">{label}</p>
+                                            {pessoasVerbaisFields.map((field, index) => {
+                                                return (
+                                                    <div key={field.id} className="botao-dinamico-wrapper">
+                                                        <input type="text" {...register(`pessoasVerbais.${index}.pessoaVerbal`, { required: required })} />
+                                                        {index > 0 && (
+                                                            <button type="button" className="botao-dinamico" onClick={() => removePessoasVerbais(index)}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                                                        )}
+                                                    </div>
+                                                )
+                                            })}
+                                            <div className="botao-dinamico-wrapper"><button type="button" className="botao-dinamico" onClick={() => appendPessoasVerbais({ pessoaVerbal: '' })}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-plus" /></button></div>
+                                        </div>
                                     )}
                                 </div>
                             );

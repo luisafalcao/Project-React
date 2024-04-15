@@ -39,42 +39,15 @@ export default function Gramatica() {
 
     return (
         <>
-            <div className="container grid half">
+            <div className="container grid">
                 <div className="coluna">
                     <ListaGramatica conteudo={gramatica} />
+                    <Card>
+                        <h4 className="titulo-lista">Pronomes</h4>
+                        <ListaPronomes conteudo={pronomes}></ListaPronomes>
+                    </Card>
                 </div>
                 <div className="coluna">
-                    <Card classes="container half">
-                        <div className="coluna">
-                            <ListaPronomes conteudo={pronomes}></ListaPronomes>
-                        </div>
-                        <div className="coluna">
-                            <Form
-                                setDatabaseId={setPronomesId}
-                                categoria="pronomes"
-                                idioma={id}
-                                campos={[
-                                    {
-                                        name: "pronomeTipo",
-                                        type: "text",
-                                        maxLength: 10,
-                                        required: true,
-                                        label: "Tipo de Pronome",
-                                    },
-                                    {
-                                        dinamico: true,
-                                        name: "pronomes",
-                                        type: "text",
-                                        maxLength: 10,
-                                        required: false,
-                                        label: "Pronomes",
-                                    }
-                                ]}
-                                textoBotao="Adicionar"
-                                textoSucesso="Pronome adicionado com sucesso!"
-                            />
-                        </div>
-                    </Card>
                     <NovoConteudo label="Regra">
                         <Form
                             setDatabaseId={setGramaticaId}
@@ -98,6 +71,32 @@ export default function Gramatica() {
                             ]}
                             textoBotao="Adicionar"
                             textoSucesso="Regra adicionada com sucesso!"
+                        />
+                    </NovoConteudo>
+                    <NovoConteudo label="Pronome">
+                        <Form
+                            setDatabaseId={setPronomesId}
+                            categoria="pronomes"
+                            idioma={id}
+                            campos={[
+                                {
+                                    name: "pronomeTipo",
+                                    type: "text",
+                                    maxLength: 10,
+                                    required: true,
+                                    label: "Tipo de Pronome",
+                                },
+                                {
+                                    dinamico: true,
+                                    name: "pronomes",
+                                    type: "text",
+                                    maxLength: 10,
+                                    required: false,
+                                    label: "Pronomes",
+                                }
+                            ]}
+                            textoBotao="Adicionar"
+                            textoSucesso="Pronome adicionado com sucesso!"
                         />
                     </NovoConteudo>
                 </div>

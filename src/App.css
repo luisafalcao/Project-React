@@ -90,6 +90,7 @@ input,
 input {
   width: -webkit-fill-available;
 }
+
 input.full-width {
   width: 100%;
 }
@@ -97,6 +98,15 @@ input.full-width {
 ul {
   list-style: none;
   padding-left: 0;
+}
+
+label,
+p.label {
+  font-size: 0.8rem;
+}
+
+p.label {
+  margin-bottom: 0;
 }
 
 label > span {
