@@ -55,6 +55,8 @@ label {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   gap: 3rem;
 }
 
@@ -87,7 +89,7 @@ label {
   row-gap: 2rem;
 }
 
-.container.flex > * {
+.container:not(.criar-conta > .container).flex > * {
   flex: 1 1 0;
   flex-basis: 400px;
 }

@@ -11,6 +11,24 @@
   gap: 0.5rem;
 }
 
+.form-group.dinamico {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.form-group.dinamico > * {
+  flex-basis: 50%;
+}
+
+.form-group.dinamico > *:first-child {
+  flex-basis: 100%;
+}
+
+.form-group.dinamico > *:last-child {
+  flex-basis: 25%;
+}
+
 .form > form:has(.form-group.flex) {
   display: grid;
   grid-template-columns: 1fr 1fr;

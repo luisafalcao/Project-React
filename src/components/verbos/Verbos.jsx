@@ -26,49 +26,45 @@ export default function Verbos() {
 
     return (
         <>
-            <div className="container grid">
-                <div className="coluna">
-                    <ListaVerbos conteudo={verbos} categoria={categoria} />
-                </div>
-                <div className="coluna">
-                    <NovoConteudo label="Verbo">
-                        <Form
-                            setDatabaseId={setVerbosId}
-                            categoria={categoria}
-                            idioma={id}
-                            campos={[
-                                {
-                                    name: "verboId",
-                                    type: "text",
-                                    maxLength: 100,
-                                    required: true,
-                                    label: "Infinitivo (Idioma)",
-                                }, {
-                                    name: "verboPt",
-                                    type: "text",
-                                    maxLength: 100,
-                                    required: true,
-                                    label: "Infinitivo (Português)",
-                                }, {
-                                    name: "tempoVerbal",
-                                    type: "text",
-                                    maxLength: 100,
-                                    required: false,
-                                    label: "Tempo Verbal",
-                                },
-                                {
-                                    dinamico: true,
-                                    name: "pessoasVerbais",
-                                    type: "text",
-                                    required: false,
-                                    label: "Conjugações",
-                                },
-                            ]}
-                            textoBotao="Adicionar"
-                            textoSucesso="Verbo adicionado com sucesso!"
-                        />
-                    </NovoConteudo>
-                </div>
+            <div className="container">
+                <ListaVerbos conteudo={verbos} categoria={categoria} />
+                <NovoConteudo label="Verbo" margin="auto">
+                    <Form
+                        setDatabaseId={setVerbosId}
+                        categoria={categoria}
+                        idioma={id}
+                        campos={[
+                            {
+                                name: "verboId",
+                                type: "text",
+                                maxLength: 100,
+                                required: true,
+                                label: "Infinitivo (Idioma)",
+                            }, {
+                                name: "verboPt",
+                                type: "text",
+                                maxLength: 100,
+                                required: true,
+                                label: "Infinitivo (Português)",
+                            }, {
+                                name: "tempoVerbal",
+                                type: "text",
+                                maxLength: 100,
+                                required: false,
+                                label: "Tempo Verbal",
+                            },
+                            {
+                                dinamico: true,
+                                name: "pessoasVerbais",
+                                type: "text",
+                                required: false,
+                                label: "Conjugações",
+                            },
+                        ]}
+                        textoBotao="Adicionar"
+                        textoSucesso="Verbo adicionado com sucesso!"
+                    />
+                </NovoConteudo>
             </div>
         </>
     )

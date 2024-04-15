@@ -1,7 +1,15 @@
-.add-conteudo:not() {
+.add-conteudo {
   margin: 0;
-  min-width: 200px;
+  max-width: 800px;
+  width: 100%;
   cursor: pointer;
+}
+
+@media (min-width: 500px) {
+  .add-conteudo {
+    min-width: 400px;
+    width: 400px;
+  }
 }
 
 .wrapper .add-conteudo {
@@ -10,7 +18,6 @@
 
 .add-conteudo.margin-auto {
   margin: auto;
-  width: max-content;
 }
 
 .add-conteudo > .header {
