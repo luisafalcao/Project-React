@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Ignore configuration files containing sensitive information
+src/infra/firebase.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
