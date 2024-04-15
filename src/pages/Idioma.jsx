@@ -22,7 +22,7 @@ export default function Idioma() {
             let dataPronomes = await listarItens("pronomes", id);
             let pronomesPessoais = dataPronomes.filter((item) => {
                 return item.pronomeTipo === 'Pessoal'
-            })[0].pronomes
+            })[0]?.pronomes
 
             if (pronomesPessoais) {
                 pronomesConjugRef.current = pronomesPessoais

@@ -30,7 +30,7 @@ export default function Verbos() {
     return (
         <>
             <div className="container">
-                <ListaVerbos conteudo={verbos} categoria={categoria} idEmEdicao={idEmEdicao} setIdEmEdicao={setIdEmEdicao} />
+                <ListaVerbos idioma={id} conteudo={verbos} categoria={categoria} idEmEdicao={idEmEdicao} setIdEmEdicao={setIdEmEdicao} />
                 <NovoConteudo label="Verbo" margin="auto">
                     <Form
                         setDatabaseId={setVerbosId}
@@ -53,7 +53,7 @@ export default function Verbos() {
                                 name: "tempoVerbal",
                                 type: "text",
                                 maxLength: 100,
-                                required: false,
+                                required: true,
                                 label: "Tempo Verbal",
                             },
                             {

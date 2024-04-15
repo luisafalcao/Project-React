@@ -10,6 +10,9 @@
   gap: 1rem;
 }
 
+.card:has(.wrapper) {
+  justify-content: flex-start;
+}
 .card.row {
   flex-direction: row;
   gap: 3rem;
@@ -49,4 +52,12 @@
 
 .card ul {
   margin-top: 0;
+}
+
+.card > .wrapper {
+  display: flex;
+}
+
+.card > .wrapper:not(.pronomes) > ul {
+  padding: 1rem;
 }

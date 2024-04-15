@@ -9,14 +9,31 @@
   scale: 0.7;
 }
 
+.rdt_Table {
+  margin-bottom: 2rem;
+}
+
+.rdt_TableHeadRow {
+  justify-content: center;
+  border-bottom: 1px solid var(--accent-color) !important;
+}
+
 .rdt_Pagination svg {
   top: 10px;
 }
 
 .rdt_TableRow {
   background-color: transparent !important;
+  font-size: 1rem !important;
 }
 
 .rdt_TableCell {
-  text-align: center;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.rdt_TableCol {
+  justify-content: center !important;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
 }

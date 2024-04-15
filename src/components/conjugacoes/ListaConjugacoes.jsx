@@ -6,22 +6,21 @@ import DataTable from "react-data-table-component"
 import "./ListaConjugacoes.css"
 import NoDataComponent from "../NoDataComponent";
 
-export default function ListaConjugacoes({ conteudo }) {
+export default function ListaConjugacoes({ conteudo, setIdEmEdicao }) {
     const { pronomesConjugRef } = useContext(ConjugContext);
-    const { tempoVerbal, pessoasVerbais } = conteudo
-    console.log(tempoVerbal)
-    console.log(pessoasVerbais)
 
+    let itens =
+        conteudo.map((item) => {
+            return {
+                conjugacoes: item.pessoasVerbais,
+                tempoVerbal: item.tempoVerbal,
+                id: item.id
+            }
+        })
 
-    let conjugacoes = {
-        tempo: { tempoVerbal: tempoVerbal },
-        ...pessoasVerbais,
-    }
-
-    let dataArray = Object.values(conjugacoes).reverse()
-
-    const [headerCol, ...restArray] = dataArray
-
+    let id = itens[0].id
+    let pessoasVerbais = itens[0].conjugacoes
+    let tempoVerbal = itens[0].tempoVerbal
     let pronomesArray = pronomesConjugRef.current
 
     const outrasColunas = pronomesArray.map(pronome => (
@@ -38,24 +37,24 @@ export default function ListaConjugacoes({ conteudo }) {
         }
     ]
 
-    console.log(tempoVerbal)
     const colunas = colunaPrincipal.concat(outrasColunas)
 
     let dataConjugacoes = {
-        tempoVerbal: headerCol.tempoVerbal,
+        tempoVerbal: tempoVerbal,
+        id: id,
         center: true,
     };
 
-    console.log(conteudo)
 
     for (let i = 0; i < pronomesArray.length; i++) {
-        const pronoun = pronomesArray[i].pronome;
-        const verbForm = restArray[i]?.pessoaVerbal;
-        console.log(verbForm)
+        const pronoun = pronomesArray[i]?.pronome;
+        if (pessoasVerbais) {
+            const verbForm = pessoasVerbais[i]?.pessoaVerbal;
 
-        dataConjugacoes = {
-            ...dataConjugacoes,
-            [pronoun]: verbForm
+            dataConjugacoes = {
+                ...dataConjugacoes,
+                [pronoun]: verbForm
+            }
         }
     }
 
@@ -111,20 +110,21 @@ export default function ListaConjugacoes({ conteudo }) {
         }
     }
 
-    const paginationComponentOptions = {
-        rowsPerPageText: 'Verbos por página',
-        rangeSeparatorText: 'de',
-        selectAllRowsItem: true,
-        selectAllRowsItemText: 'Todos',
+    // const paginationComponentOptions = {
+    //     rowsPerPageText: 'Tempos verbais por página',
+    //     rangeSeparatorText: 'de',
+    //     selectAllRowsItem: true,
+    //     selectAllRowsItemText: 'Todos',
 
-    };
-
+    // };
 
     function handleRowSelect(selectedRows) {
-        console.log(selectedRows.selectedRows[0]?.id)
+        // console.log(selectedRows.selectedRows[0]?.id)
+        setIdEmEdicao(selectedRows.selectedRows[0]?.id)
     }
 
     return (
+        pessoasVerbais &&
         <DataTable
             columns={colunas}
             data={data}
@@ -135,8 +135,8 @@ export default function ListaConjugacoes({ conteudo }) {
             selectableRowsHighlight
             selectableRowsSingle
             onSelectedRowsChange={handleRowSelect}
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
+            // pagination
+            // paginationComponentOptions={paginationComponentOptions}
             noDataComponent={<NoDataComponent />}
         />
     )

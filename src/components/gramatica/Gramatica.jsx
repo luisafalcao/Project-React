@@ -42,8 +42,7 @@ export default function Gramatica() {
             <div className="container grid">
                 <div className="coluna">
                     <ListaGramatica conteudo={gramatica} />
-                    <Card>
-                        <h4 className="titulo-lista">Pronomes</h4>
+                    <Card categoria="pronomes">
                         <ListaPronomes conteudo={pronomes}></ListaPronomes>
                     </Card>
                 </div>

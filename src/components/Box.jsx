@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useCollapse } from "react-collapsed";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { deletarItem } from "../infra/basededados";
 import "./Box.css"
 
-export default function Box({ titulo, children, classes }) {
+export default function Box({ idioma, titulo, categoria, children, classes, handleDeletar, idEmEdicao, tempoVerbal }) {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
 
-    function handleClick(e) {
-        console.log(e.target.parentElement)
+    function handleClick() {
+        handleDeletar(idioma, categoria, titulo[0], idEmEdicao, tempoVerbal)
     }
+
     return (
         <div className={`box ${classes}`}>
             <div className="box-header" {...getToggleProps()}>
@@ -26,7 +26,7 @@ export default function Box({ titulo, children, classes }) {
             <div className="box-body" {...getCollapseProps()}>
                 <div className="wrapper">
                     {children}
-                    <button type="button" className="botao-dinamico box" onClick={handleClick}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button>
+                    {/* <button type="button" className="botao-dinamico box" onClick={handleClick}><FontAwesomeIcon className="home-icon" icon="fa-solid fa-minus" /></button> */}
                 </div>
             </div>
         </div>

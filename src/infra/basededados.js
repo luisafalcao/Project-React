@@ -1,4 +1,4 @@
-import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
 
@@ -35,13 +35,17 @@ export async function listarItens(colecao, idioma) {
             retorno = QuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         })
 
-    console.log(retorno)
     return retorno
 }
 
 // deletar itens
-export async function deletarItem() {
-    await deleteDoc(doc(db, "idiomas", "DC"));
+export async function deletarItem(idioma, colecao, docName, id, field) {
+    const docRef = doc(db, "idiomas", id);
+    const retorno = await deleteDoc(docRef)
+    // const retorno = await docRef.update({
+    //     [field]: FieldValue.delete()
+    // });
+    return retorno
 }
 
 // export async function listarIdiomas(colecao) {
