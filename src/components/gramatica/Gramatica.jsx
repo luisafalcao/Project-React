@@ -67,7 +67,7 @@ export default function Gramatica() {
                                         type: "text",
                                         maxLength: 10,
                                         required: false,
-                                        noLabel: true,
+                                        label: "Pronomes",
                                     }
                                 ]}
                                 textoBotao="Adicionar"

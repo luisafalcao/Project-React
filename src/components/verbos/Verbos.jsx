@@ -53,7 +53,7 @@ export default function Verbos() {
                                     name: "tempoVerbal",
                                     type: "text",
                                     maxLength: 100,
-                                    required: true,
+                                    required: false,
                                     label: "Tempo Verbal",
                                 },
                                 {
@@ -61,7 +61,7 @@ export default function Verbos() {
                                     name: "pessoasVerbais",
                                     type: "text",
                                     required: false,
-                                    noLabel: true,
+                                    label: "Conjugações",
                                 },
                             ]}
                             textoBotao="Adicionar"
